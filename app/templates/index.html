@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TARO LLM</title>
+
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="main-header">🔮TARO LLM</div>
+        <div class="user-box">
+            <div class="user-inputs">
+                <textarea placeholder="Type your question to the Tarot cards here ..." id="message"></textarea>
+                <label for="model"></label>
+                <select id="model">
+                    {% for model in models %}
+                    <option value="{{ model['id'] }}">{{ model['id'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="user-btns">
+                <button class="cyber-btn" id="send" onclick="onSend();">
+                    📩send<span aria-hidden>_</span>
+                    <span aria-hidden class="cyber-btn__glitch">send_</span>
+                    <span aria-hidden class="cyber-btn__tag">LLM</span>
+                </button>
+                <button class="cyber-btn" id="refresh" onclick="onRefresh();">
+                    ♻️refresh<span aria-hidden>_</span>
+                    <span aria-hidden class="cyber-btn__glitch">refresh_</span>
+                    <span aria-hidden class="cyber-btn__tag">LLM</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="taro-llm">
+        <div class="cards">
+
+        </div>
+        <div class="llm-text">
+            <div class="timer" id="timer"></div>
+            <md id="answer"></md>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="/static/js/markdown-tag/markdown-tag.js"></script>
+<script src="/static/js/script.js"></script>
+
+</html>

@@ -1,0 +1,346 @@
+@font-face {
+    font-family: "PressStart2P";
+    src: url("/static/fonts/PressStart2P-Regular.ttf") format("truetype")
+}
+
+.container {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-header {
+    display: flex;
+    font-size: 3rem;
+    font-family: "PressStart2P";
+    margin: 20px;
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed black;
+    border-radius: 20px;
+    padding: 5%;
+    width: 700px;
+}
+
+.user-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-inputs textarea {
+    resize: none;
+    width: 500px;
+    height: 70px;
+    font-size: 1.2rem;
+}
+
+.user-inputs select {
+    font-family: "PressStart2P";
+    height: 30px;
+}
+
+.user-inputs select option {
+}
+
+.user-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.cyber-btn {
+    --primary: hsl(var(--primary-hue), 85%, calc(var(--primary-lightness, 50) * 1%));
+    --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);
+    --primary-hue: 50;
+    --primary-lightness: 0;
+    --color: hsl(0, 0%, 100%);
+    --font-size: 8px;
+    --shadow-primary-hue: 180;
+    --label-size: 2px;
+    --shadow-secondary-hue: 60;
+    --shadow-secondary: hsl(var(--shadow-secondary-hue), 90%, 60%);
+    --clip: polygon(0 0, 100% 0, 100% 100%, 95% 100%, 95% 90%, 85% 90%, 85% 100%, 8% 100%, 0 70%);
+    --border: 4px;
+    --shimmy-distance: 5;
+    --clip-one: polygon(0 2%, 100% 2%, 100% 95%, 95% 95%, 95% 90%, 85% 90%, 85% 95%, 8% 95%, 0 70%);
+    --clip-two: polygon(0 78%, 100% 78%, 100% 100%, 95% 100%, 95% 90%, 85% 90%, 85% 100%, 8% 100%, 0 78%);
+    --clip-three: polygon(0 44%, 100% 44%, 100% 54%, 95% 54%, 95% 54%, 85% 54%, 85% 54%, 8% 54%, 0 54%);
+    --clip-four: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+    --clip-five: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+    --clip-six: polygon(0 40%, 100% 40%, 100% 85%, 95% 85%, 95% 85%, 85% 85%, 85% 85%, 8% 85%, 0 70%);
+    --clip-seven: polygon(0 63%, 100% 63%, 100% 80%, 95% 80%, 95% 80%, 85% 80%, 85% 80%, 8% 80%, 0 70%);
+    font-family: 'PressStart2P';
+    color: var(--color);
+    cursor: pointer;
+    background: transparent;
+    text-transform: uppercase;
+    font-size: var(--font-size);
+    outline: transparent;
+    letter-spacing: 2px;
+    position: relative;
+    border: 0;
+    width: 120px;
+    height: 40px;
+    transition: background 0.2s;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.cyber-btn:hover {
+    --primary: hsl(var(--primary-hue), 85%, calc(var(--primary-lightness, 50) * 0.8%));
+}
+
+.cyber-btn:active {
+    --primary: hsl(var(--primary-hue), 85%, calc(var(--primary-lightness, 50) * 0.6%));
+}
+
+.cyber-btn:after,
+.cyber-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    clip-path: var(--clip);
+    z-index: -1;
+}
+
+.cyber-btn:before {
+    background: var(--shadow-primary);
+    transform: translate(var(--border), 0);
+}
+
+.cyber-btn:after {
+    background: var(--primary);
+}
+
+.cyber-btn__tag {
+    position: absolute;
+    padding: 1px 4px;
+    letter-spacing: 1px;
+    line-height: 1;
+    bottom: -5%;
+    right: 2%;
+    font-weight: normal;
+    color: hsl(0, 0%, 0%);
+    font-size: var(--label-size);
+}
+
+.cyber-btn__glitch {
+    position: absolute;
+    top: calc(var(--border) * -1);
+    left: calc(var(--border) * -1);
+    right: calc(var(--border) * -1);
+    bottom: calc(var(--border) * -1);
+    background: var(--shadow-primary);
+    text-shadow: 2px 2px var(--shadow-primary), -2px -2px var(--shadow-secondary);
+    clip-path: var(--clip);
+    animation: glitch 2s infinite;
+    display: none;
+}
+
+.cyber-btn:hover .cyber-btn__glitch {
+    display: block;
+}
+
+.cyber-btn__glitch:before {
+    content: '';
+    position: absolute;
+    top: calc(var(--border) * 1);
+    right: calc(var(--border) * 1);
+    bottom: calc(var(--border) * 1);
+    left: calc(var(--border) * 1);
+    clip-path: var(--clip);
+    background: var(--primary);
+    z-index: -1;
+}
+
+@keyframes glitch {
+    0% {
+        clip-path: var(--clip-one);
+    }
+    2%, 8% {
+        clip-path: var(--clip-two);
+        transform: translate(calc(var(--shimmy-distance) * -1%), 0);
+    }
+    6% {
+        clip-path: var(--clip-two);
+        transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+    }
+    9% {
+        clip-path: var(--clip-two);
+        transform: translate(0, 0);
+    }
+    10% {
+        clip-path: var(--clip-three);
+        transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+    }
+    13% {
+        clip-path: var(--clip-three);
+        transform: translate(0, 0);
+    }
+    14%, 21% {
+        clip-path: var(--clip-four);
+        transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+    }
+    25% {
+        clip-path: var(--clip-five);
+        transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+    }
+    30% {
+        clip-path: var(--clip-five);
+        transform: translate(calc(var(--shimmy-distance) * -1%), 0);
+    }
+    35%, 45% {
+        clip-path: var(--clip-six);
+        transform: translate(calc(var(--shimmy-distance) * -1%));
+    }
+    40% {
+        clip-path: var(--clip-six);
+        transform: translate(calc(var(--shimmy-distance) * 1%));
+    }
+    50% {
+        clip-path: var(--clip-six);
+        transform: translate(0, 0);
+    }
+    55% {
+        clip-path: var(--clip-seven);
+        transform: translate(calc(var(--shimmy-distance) * 1%), 0);
+    }
+    60% {
+        clip-path: var(--clip-seven);
+        transform: translate(0, 0);
+    }
+    31%, 61%, 100% {
+        clip-path: var(--clip-four);
+    }
+}
+
+.cyber-btn:nth-of-type(2) {
+    --primary-hue: 260;
+}
+
+.timer {
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    box-shadow: inset 0px 0px 0px 2px #fff;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: relative;
+    margin: 38px auto;
+    display: none;
+ }
+
+.timer:after, .timer:before {
+    position: absolute;
+    content: "";
+    background-color: #000;
+}
+
+.timer:after {
+    width: 40px;
+    height: 2px;
+    top: 40px;
+    left: 40px;
+    -webkit-transform-origin: 1px 1px;
+       -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+    -webkit-animation: minhand 2s linear infinite;
+       -moz-animation: minhand 2s linear infinite;
+            animation: minhand 2s linear infinite;
+}
+
+.timer:before {
+    width: 25px;
+    height: 2px;
+    top: 40px;
+    left: 40px;
+    -webkit-transform-origin: 1px 1px;
+       -moz-transform-origin: 1px 1px;
+            transform-origin: 1px 1px;
+    -webkit-animation: hrhand 8s linear infinite;
+       -moz-animation: hrhand 8s linear infinite;
+            animation: hrhand 8s linear infinite;
+}
+
+@-webkit-keyframes minhand {
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(360deg)}
+}
+
+@-moz-keyframes minhand {
+    0%{-moz-transform:rotate(0deg)}
+    100%{-moz-transform:rotate(360deg)}
+}
+
+@keyframes minhand {
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+
+@-webkit-keyframes hrhand {
+    0%{-webkit-transform:rotate(0deg)}
+    100%{-webkit-transform:rotate(360deg)}
+}
+
+@-moz-keyframes hrhand {
+    0%{-moz-transform:rotate(0deg)}
+    100%{-moz-transform:rotate(360deg)}
+}
+
+@keyframes hrhand {
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+
+.llm-text {
+    border: 1px dashed black;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    width: 700px;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.llm-text details {
+    border: 1px solid #C0C0C0;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #DCDCDC;
+}
+
+.llm-text summary::-webkit-details-marker {
+    display: none;
+}
+
+.llm-text summary {
+    list-style: none;
+    width: 100%;
+    font-family: "PressStart2P";
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.llm-text summary::after {
+    content: "> Think_";
+}
+
+.llm-text details[open] summary::after {
+    content: "> Think_";
+}

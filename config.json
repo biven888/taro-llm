@@ -1,0 +1,14 @@
+{
+  "GENERAL": {
+    "PORT": 8080
+  },
+  "LLM": {
+    "HOST": "192.168.0.13",
+    "PORT": 1234,
+    "API": {
+      "MODELS": "/v1/models",
+      "CHAT": "/v1/chat/completions"
+    },
+    "TEMPERATURE": 0.3
+  }
+}
