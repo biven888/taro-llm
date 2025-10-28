@@ -1,14 +1,14 @@
 {
   "GENERAL": {
-    "PORT": 8080
+    "PORT": 8080,
+    "DATABASE": {
+      "PATH": "data"
+    }
   },
   "LLM": {
     "HOST": "192.168.0.13",
     "PORT": 1234,
-    "API": {
-      "MODELS": "/v1/models",
-      "CHAT": "/v1/chat/completions"
-    },
+    "API_PREFIX": "/v1",
     "TEMPERATURE": 0.3
   }
 }

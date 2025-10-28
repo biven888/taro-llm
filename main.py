@@ -1,9 +1,11 @@
+import threading
 from aiohttp import web
 import jinja2
 import aiohttp_jinja2
 
 from settings import settings
 from app.routes import setup_routes as setup_magic_routes
+from mcp_server.server import mcp
 
 
 application = web.Application()
@@ -50,6 +52,13 @@ def setup_app(app: web.Application) -> None:
     setup_routes(app)
 
 
+def run_mcp():
+    mcp.run(transport='http', host='localhost', port=9000)
+
+
 if __name__ == '__main__':
+    thread_mcp = threading.Thread(target=run_mcp, daemon=True)
+    thread_mcp.start()
+
     setup_app(application)
     web.run_app(application, port=settings.GENERAL.PORT)

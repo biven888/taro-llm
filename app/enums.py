@@ -9,3 +9,4 @@ class RoleEnum(StrEnum):
     SYSTEM = 'system'
     ASSISTANT = 'assistant'
     USER = 'user'
+    TOOL = 'tool'

@@ -13,26 +13,21 @@ from pydantic_settings import (
 logging.basicConfig(level=logging.DEBUG)
 
 
+class DatabaseConfig(BaseModel):
+    '''
+    Настройки до базы данных
+    '''
+
+    PATH: str
+
+
 class GeneralConfig(BaseModel):
     '''
     Общие настройки
     '''
 
     PORT: int
-
-
-class LLMAPIConfig(BaseModel):
-    '''
-    Настройки путей к API
-
-    :param MODELS: API для получения списка моделей
-    :type MODELS: str
-    :param CHAT: API для генерации
-    :type CHAT: str
-    '''
-
-    MODELS: str
-    CHAT: str
+    DATABASE: DatabaseConfig
 
 
 class LLMConfig(BaseModel):
@@ -43,15 +38,15 @@ class LLMConfig(BaseModel):
     :type HOST: str
     :param PORT: порт сервера
     :type PORT: int
-    :param API: API для получения списка моделей и генерации
-    :type API: LLMAPIConfig
+    :param API_PREFIX: префикс API
+    :type API_PREFIX: str
     :param TEMPERATURE: случайность ответа
     :type TEMPERATURE: float
     '''
 
     HOST: str
     PORT: int
-    API: LLMAPIConfig
+    API_PREFIX: str
     TEMPERATURE: float
 
 

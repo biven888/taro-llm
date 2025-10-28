@@ -22,6 +22,7 @@ ws.onmessage = function(event) {
 
     if (event.data == "assistant_message_done") {
         isDone = true;
+        answer.innerHTML.replace(/[\[TOOLREQUEST\]*\[ENDTOOL_REQUEST\]]/gi, "");
         answer.innerHTML = answer.innerHTML.replace("<think>", "<details><summary></summary>").replace("</think>", "</details>");
         renderMarkdown();
         return;
@@ -30,7 +31,20 @@ ws.onmessage = function(event) {
     isDone = false;
     const chatNewMessage = JSON.parse(event.data);
     chat = chatNewMessage;
-    answer.innerHTML = chat.messages.at(-1).content;
+
+    if (chat.messages.at(-1).role == "tool") {
+        const cardsContainer = document.getElementById("cards");
+        const cards = chat.messages.at(-1).content;
+        cardsContainer.innerHTML = "";
+
+        cards.forEach((card) => {
+            cardsContainer.innerHTML += `<img src="${card.image}" />`;
+        });
+    }
+
+    if (chat.messages.at(-1).role == "assistant") {
+        answer.innerHTML = chat.messages.at(-1).content;
+    }
 };
 
 ws.onerror = function(error) {

@@ -5,8 +5,11 @@ from aiohttp.web_request import Request
 from aiohttp import web
 
 from app.llm import LLMClient
-from app.validators import ChatPydantic, MessagePydantic
+from app.validators import ChatPydantic
 from app.enums import RoleEnum
+
+from mcp_server.methods import get_card
+from mcp_server.schemas import OneCardPydantic
 
 
 llm_client = LLMClient()
@@ -21,6 +24,8 @@ async def index(request: Request):
     :type request: Request
     :return:
     '''
+
+    await llm_client.get_available_models()
     return {'models': llm_client.models}
 
 
@@ -36,26 +41,20 @@ async def send_question(ws: web.WebSocketResponse, chat: ChatPydantic):
     :rtype: None
     '''
 
-    new_chat = chat.model_copy(deep=True)
-    message_assistant = MessagePydantic(role=RoleEnum.ASSISTANT, content='')
-    new_chat.messages.append(message_assistant)
+    async for chunk in llm_client.generate_response(chat):
+        try:
+            if chunk.messages[-1].role == RoleEnum.TOOL:
+                cards = json.loads(chunk.messages[-1].content)
+                cards_info = []
 
-    if chat.stream:
-        async for chunk in llm_client.generate_response(chat):
-            if 'choices' in chunk and 'delta' in chunk['choices'][0] and 'content' in chunk['choices'][0]['delta']:
-                message_assistant.content += chunk['choices'][0]['delta']['content']
-                try:
-                    await ws.send_json(new_chat.model_dump())
-                except client_exceptions.ClientConnectionResetError:
-                    await ws.close()
-    else:
-        chunk = list(await llm_client.generate_response(chat))[0]
-        if 'choices' in chunk and 'delta' in chunk['choices'][0] and 'content' in chunk['choices'][0]['delta']:
-            message_assistant.content = chunk['choices'][0]['delta']['content']
-            try:
-                await ws.send_json(new_chat.model_dump())
-            except client_exceptions.ClientConnectionResetError:
-                await ws.close()
+                for card in cards:
+                    card_info = await get_card(card_id=card['id'])
+                    cards_info.append(OneCardPydantic.model_validate(card_info))
+
+                chunk.messages[-1].content = cards_info
+            await ws.send_json(chunk.model_dump())
+        except client_exceptions.ClientConnectionResetError:
+            await ws.close()
 
 
 async def websocket_handler(request: Request):
@@ -75,6 +74,13 @@ async def websocket_handler(request: Request):
         if message.type == web.WSMsgType.TEXT:
             try:
                 chat = ChatPydantic.model_validate_json(message.data)
+                messages = []
+
+                for message_chat in chat.messages:
+                    if message_chat.role != RoleEnum.TOOL:
+                        messages.append(message_chat)
+
+                chat.messages = messages
             except json.JSONDecodeError:
                 continue
             except Exception as err:

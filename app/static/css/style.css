@@ -307,7 +307,7 @@
     100%{transform:rotate(360deg)}
 }
 
-.llm-text {
+.taro-llm {
     border: 1px dashed black;
     margin: 20px;
     padding: 20px;
@@ -343,4 +343,19 @@
 
 .llm-text details[open] summary::after {
     content: "> Think_";
+}
+
+.cards {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards img {
+    width: 25%;
+    margin: 15px;
+    border: 1px solid black;
+    border-radius: 15px;
 }
