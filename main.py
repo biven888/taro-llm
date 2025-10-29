@@ -2,6 +2,7 @@ import threading
 from aiohttp import web
 import jinja2
 import aiohttp_jinja2
+import uvicorn
 
 from settings import settings
 from app.routes import setup_routes as setup_magic_routes
@@ -53,7 +54,8 @@ def setup_app(app: web.Application) -> None:
 
 
 def run_mcp():
-    mcp.run(transport='http', host='localhost', port=9000)
+    app = mcp.http_app()
+    uvicorn.run(app, host='localhost', port=9000)
 
 
 if __name__ == '__main__':
